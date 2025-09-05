@@ -1,10 +1,12 @@
 const request = require("supertest");
 const app = require("../../app");
 const { mongoConnect, mongoDisconnect } = require("../../services/mongo");
+const { loadPlanetsData } = require("../../models/planets.model");
 
-describe("Laucnhes API", () => {
+describe("Launches API", () => {
   beforeAll(async () => {
     await mongoConnect();
+    await loadPlanetsData();
   });
 
   afterAll(async () => {
@@ -12,7 +14,7 @@ describe("Laucnhes API", () => {
   });
 
   describe("Test GET /launches", () => {
-    test("It should response with 200 success", async () => {
+    test("It should respond with 200 success", async () => {
       const response = await request(app)
         .get("/v1/launches")
         .expect("Content-Type", /json/)
@@ -20,7 +22,7 @@ describe("Laucnhes API", () => {
     });
   });
 
-  describe("Test POST /launches", () => {
+  describe("Test POST /launch", () => {
     const completeLaunchData = {
       mission: "USS Enterprise",
       rocket: "NCC 1701-D",
@@ -41,7 +43,7 @@ describe("Laucnhes API", () => {
       launchDate: "zoot",
     };
 
-    test("It should response with 201 success", async () => {
+    test("It should respond with 201 created", async () => {
       const response = await request(app)
         .post("/v1/launches")
         .send(completeLaunchData)
@@ -50,8 +52,8 @@ describe("Laucnhes API", () => {
 
       const requestDate = new Date(completeLaunchData.launchDate).valueOf();
       const responseDate = new Date(response.body.launchDate).valueOf();
-
       expect(responseDate).toBe(requestDate);
+
       expect(response.body).toMatchObject(launchDataWithoutDate);
     });
 
@@ -67,7 +69,7 @@ describe("Laucnhes API", () => {
       });
     });
 
-    test("It shound catch invalid dates", async () => {
+    test("It should catch invalid dates", async () => {
       const response = await request(app)
         .post("/v1/launches")
         .send(launchDataWithInvalidDate)
