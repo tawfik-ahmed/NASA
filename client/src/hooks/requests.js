@@ -1,4 +1,4 @@
-const API_URL = "v1";
+const API_URL = "https://nasa-mission.up.railway.app/v1";
 
 async function httpGetPlanets() {
   const res = await fetch(`${API_URL}/planets`);
