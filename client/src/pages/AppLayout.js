@@ -61,7 +61,7 @@ const AppLayout = (props) => {
           style={{ visibility: frameVisible ? "visible" : "hidden" }}
         >
           {(anim) => (
-            <div style={{ padding: "20px" }}>
+            <div>
               <Switch>
                 <Route exact path="/">
                   <Launch
