@@ -9,9 +9,11 @@ app.use(helmet());
 
 const api = require("./routes/api");
 
+// https://nasa-mission.up.railway.app
+
 app.use(
   cors({
-    origin: "https://nasa-mission.up.railway.app",
+    origin: "http://localhost:3000",
   })
 );
 

@@ -25,14 +25,16 @@ const History = (props) => {
 
   return (
     <article id="history">
-      <Appear animate show={props.entered}>
+      <Appear animate show={props.entered} style={{ maxWidth: "100%" }}>
         {" "}
         <Paragraph>
           History of mission launches including SpaceX launches starting from
           the year 2006.
         </Paragraph>
         <Table animate>
-          <table style={{ tableLayout: "fixed" }}>
+          <table
+            style={{ tableLayout: "fixed", width: "100%", minWidth: "600px" }}
+          >
             <thead>
               <tr>
                 <th style={{ width: "2rem" }}></th>

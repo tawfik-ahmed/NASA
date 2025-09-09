@@ -40,7 +40,15 @@ const Upcoming = (props) => {
   }, [launches, abortLaunch, classes.link]);
 
   return (
-    <Appear id="upcoming" animate show={entered}>
+    <Appear
+      id="upcoming"
+      animate
+      show={entered}
+      style={{
+        maxWidth: "100%",
+        overflowX: "auto",
+      }}
+    >
       <Paragraph>
         Upcoming missions including both SpaceX launches and newly scheduled
         Zero to Mastery rockets.
@@ -55,7 +63,7 @@ const Upcoming = (props) => {
               <th style={{ width: "10rem" }}>Date</th>
               <th style={{ width: "11rem" }}>Mission</th>
               <th style={{ width: "11rem" }}>Rocket</th>
-              <th>Destination</th>
+              <th style={{ width: "8rem" }}>Destination</th>
             </tr>
           </thead>
           <tbody>{tableBody}</tbody>

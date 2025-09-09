@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import { Frame, withSounds, withStyles } from "arwes";
 
@@ -28,6 +28,29 @@ const styles = () => ({
 });
 
 const AppLayout = (props) => {
+  const [isSmall, setIsSmall] = useState(
+    window.matchMedia("(max-width: 550px)").matches
+  );
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 550px)");
+    const handler = (e) => setIsSmall(e.matches);
+
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener("change", handler);
+    } else {
+      mediaQuery.addListener(handler);
+    }
+
+    return () => {
+      if (mediaQuery.removeEventListener) {
+        mediaQuery.removeEventListener("change", handler);
+      } else {
+        mediaQuery.removeListener(handler);
+      }
+    };
+  }, []);
+
   const { sounds, classes } = props;
 
   const [frameVisible, setFrameVisible] = useState(true);
@@ -61,7 +84,13 @@ const AppLayout = (props) => {
           style={{ visibility: frameVisible ? "visible" : "hidden" }}
         >
           {(anim) => (
-            <div>
+            <div
+              style={{
+                padding: "20px",
+                overflowX: "auto",
+                fontSize: isSmall ? "18px" : "20px",
+              }}
+            >
               <Switch>
                 <Route exact path="/">
                   <Launch
